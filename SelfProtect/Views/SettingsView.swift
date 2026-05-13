@@ -278,6 +278,26 @@ struct SettingsView: View {
 
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 2) {
+                        Text("Hide Dock Icon")
+                            .font(.body)
+                        Text("App runs from menu bar only — no dock icon")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    Spacer()
+                    Toggle("", isOn: Binding(
+                        get: { viewModel.hideDockIcon },
+                        set: { viewModel.hideDockIcon = $0; viewModel.saveConfig() }
+                    ))
+                    .toggleStyle(.switch)
+                    .controlSize(.small)
+                }
+                .padding(14)
+
+                Divider().padding(.leading, 14)
+
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading, spacing: 2) {
                         Text("Menu Bar Icon")
                             .font(.body)
                         Text("Shows shield outline when idle, filled when active")

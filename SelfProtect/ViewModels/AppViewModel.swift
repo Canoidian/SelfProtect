@@ -28,6 +28,11 @@ class AppViewModel: ObservableObject {
     @Published var allowlistedAppIDs: Set<String> = []
     @Published var allowlistedDomains: Set<String> = []
     @Published var showMenuBarTimer: Bool = true
+    @Published var hideDockIcon: Bool = false {
+        didSet {
+            NSApp.setActivationPolicy(hideDockIcon ? .accessory : .regular)
+        }
+    }
 
     @Published var pomodoroWorkMinutes: Double = 25
     @Published var pomodoroBreakMinutes: Double = 5
@@ -110,6 +115,10 @@ class AppViewModel: ObservableObject {
             allowlistedDomains = Set(allowlistedDom)
         }
         if let smbt = json["showMenuBarTimer"] as? Bool { showMenuBarTimer = smbt }
+        if let hdi = json["hideDockIcon"] as? Bool {
+            hideDockIcon = hdi
+            NSApp.setActivationPolicy(hdi ? .accessory : .regular)
+        }
         if let wd = json["pomodoroWorkMinutes"] as? Double { pomodoroWorkMinutes = wd }
         if let bd = json["pomodoroBreakMinutes"] as? Double { pomodoroBreakMinutes = bd }
         if let enabledPresetIDs = json["enabledPresets"] as? [String] {
@@ -135,6 +144,7 @@ class AppViewModel: ObservableObject {
             "allowlistedAppIDs": Array(allowlistedAppIDs),
             "allowlistedDomains": Array(allowlistedDomains),
             "showMenuBarTimer": showMenuBarTimer,
+            "hideDockIcon": hideDockIcon,
             "pomodoroWorkMinutes": pomodoroWorkMinutes,
             "pomodoroBreakMinutes": pomodoroBreakMinutes,
             "enabledPresets": categoryProvider.enabledPresets.map { $0.uuidString }
