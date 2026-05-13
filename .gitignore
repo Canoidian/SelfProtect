@@ -1,0 +1,13 @@
+# Build
+.build/
+*.xcodeproj/
+*.xcworkspace/
+
+# Temp / system
+.DS_Store
+*.swp
+*.swo
+*~
+
+# macOS
+*.icns.bak
